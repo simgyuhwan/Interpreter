@@ -1,5 +1,7 @@
 package lox;
 
+import static lox.TokenType.EOF;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -63,5 +65,13 @@ public class Lox {
   private static void report(int line, String where, String message) {
     System.err.println("[line " + line + "] Error" + where + ": " + message);
     hadError = true;
+  }
+
+  static void error(Token Token, String message) {
+    if (Token.type == EOF) {
+      report(Token.line, " at end", message);
+    } else {
+      report(Token.line, " at'" + Token.lexeme + "'", message);
+    }
   }
 }
