@@ -29,6 +29,14 @@ class Parser {
 
   }
 
+  Expr parse() {
+    try{
+      return expression();
+    }catch (ParseError error) {
+      return null;
+    }
+  }
+
   private final List<Token> tokens;
   private int current = 0;
 
@@ -65,8 +73,8 @@ class Parser {
   }
 
   private Expr term() {
-    Expr expr = factor();
 
+    Expr expr = factor();
     while (match(MINUS, PLUS)) {
       Token operator = previous();
       Expr right = factor();
