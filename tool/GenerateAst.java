@@ -20,6 +20,9 @@ public class GenerateAst {
         "Unary : Token operator, Expr right"
     ));
 
+    defineAst(outputDir, "Stmt", List.of(
+        "Expression: Expr expression",
+        "Print     : Expr expression"));
   }
 
   private static void defineAst(String outputDir, String baseName, List<String> types)

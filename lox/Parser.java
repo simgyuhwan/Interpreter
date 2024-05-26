@@ -21,6 +21,7 @@ import static lox.TokenType.STAR;
 import static lox.TokenType.STRING;
 import static lox.TokenType.TRUE;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class Parser {
@@ -29,12 +30,33 @@ class Parser {
 
   }
 
-  Expr parse() {
-    try{
-      return expression();
-    }catch (ParseError error) {
-      return null;
+//  Expr parse() {
+//    try {
+//      return expression();
+//    } catch (ParseError error) {
+//      return null;
+//    }
+//  }
+
+  List<Stmt> parse() {
+    List<Stmt> statements = new ArrayList<>();
+    while (!isAtEnd()) {
+      statements.add(statement());
     }
+    return statements;
+  }
+
+  private Stmt statement() {
+    if (match(print)) {
+      return printStatement();
+    }
+    return expressionStatement();
+  }
+
+  private Stmt printStatement() {
+    Expr value = expression();
+    consume(SEMICOLON, "Expect ';' after value.");
+    return new Stmt.Print(value);
   }
 
   private final List<Token> tokens;
