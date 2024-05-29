@@ -2,11 +2,6 @@ package lox;
 
 import java.util.List;
 
-import lox.Expr.Binary;
-import lox.Expr.Grouping;
-import lox.Expr.Literal;
-import lox.Expr.Unary;
-
 class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 
 	void interpret(Expr expression) {
