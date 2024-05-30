@@ -1,11 +1,5 @@
 package lox;
 
-import lox.Expr.Binary;
-import lox.Expr.Grouping;
-import lox.Expr.Literal;
-import lox.Expr.Unary;
-import lox.Expr.Variable;
-
 public class AstPrinter implements Expr.Visitor<String> {
 
   String print(Expr expr) {
