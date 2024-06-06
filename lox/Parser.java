@@ -32,17 +32,26 @@ import java.util.List;
 
 class Parser {
 
+  private final List<Token> tokens;
+
+  private int current = 0;
+
+  public Parser(List<Token> tokens) {
+    this.tokens = tokens;
+  }
+
   private static class ParseError extends RuntimeException {
 
   }
-
   //  Expr parse() {
   //    try {
   //      return expression();
   //    } catch (ParseError error) {
   //      return null;
   //    }
+
   //  }
+
 
   List<Stmt> parse() {
     List<Stmt> statements = new ArrayList<>();
@@ -109,13 +118,6 @@ class Parser {
     Expr value = expression();
     consume(SEMICOLON, "Expect ';' after value.");
     return new Stmt.Print(value);
-  }
-
-  private final List<Token> tokens;
-  private int current = 0;
-
-  public Parser(List<Token> tokens) {
-    this.tokens = tokens;
   }
 
 
