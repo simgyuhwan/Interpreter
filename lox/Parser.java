@@ -2,6 +2,7 @@ package lox;
 
 import static lox.TokenType.BANG;
 import static lox.TokenType.BANG_EQUAL;
+import static lox.TokenType.ELSE;
 import static lox.TokenType.EOF;
 import static lox.TokenType.EQUAL;
 import static lox.TokenType.EQUAL_EQUAL;
@@ -9,6 +10,7 @@ import static lox.TokenType.FALSE;
 import static lox.TokenType.GREATER;
 import static lox.TokenType.GREATER_EQUAL;
 import static lox.TokenType.IDENTIFIER;
+import static lox.TokenType.IF;
 import static lox.TokenType.LEFT_BRACE;
 import static lox.TokenType.LEFT_PAREN;
 import static lox.TokenType.LESS;
@@ -88,6 +90,9 @@ class Parser {
   }
 
   private Stmt statement() {
+    if (match(IF)) {
+      return ifStatement();
+    }
     if (match(PRINT)) {
       return printStatement();
     }
@@ -95,6 +100,19 @@ class Parser {
       return new Stmt.Block(block());
     }
     return expressionStatement();
+  }
+
+  private Stmt ifStatement() {
+    consume(LEFT_PAREN, "Expect '(' after 'if'.");
+    Expr condition = expression();
+    consume(RIGHT_PAREN, "Expect ')' after if condition");
+
+    Stmt thenBranch = statement();
+    Stmt elseBranch = null;
+    if (match(ELSE)) {
+      elseBranch = statement();
+    }
+    return new Stmt.If(condition, thenBranch, elseBranch);
   }
 
   private List<Stmt> block() {
