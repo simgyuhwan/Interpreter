@@ -30,6 +30,7 @@ import static lox.TokenType.STAR;
 import static lox.TokenType.STRING;
 import static lox.TokenType.TRUE;
 import static lox.TokenType.VAR;
+import static lox.TokenType.WHILE;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,10 +100,22 @@ class Parser {
     if (match(PRINT)) {
       return printStatement();
     }
+    if (match(WHILE)) {
+      return whileStatement();
+    }
     if (match(LEFT_BRACE)) {
       return new Stmt.Block(block());
     }
     return expressionStatement();
+  }
+
+  private Stmt whileStatement() {
+    consume(LEFT_PAREN, "Expect '(' after 'while'");
+    Expr condition = expression();
+    consume(RIGHT_PAREN, "Expect ') after condition");
+    Stmt body = statement();
+
+    return new Stmt.While(condition, body);
   }
 
   private Stmt ifStatement() {
