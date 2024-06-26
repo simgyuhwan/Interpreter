@@ -260,6 +260,12 @@ class Parser {
 
   private Expr parseLeftAssociativeBinaryExpr(Supplier<Expr> operandParser,
       TokenType... operatorTypes) {
+    if(match(operatorTypes)) {
+      Token operator = previous();
+      error(operator, "Missing left operand for binary operator");
+      operandParser.get();
+      return new Expr.Literal(null);
+    }
     Expr expr = operandParser.get();
 
     while (match(operatorTypes)) {
@@ -331,6 +337,7 @@ class Parser {
 
       switch (peek().type) {
         case CLASS, FUN, VAR, FOR, IF, WHILE, PRINT, RETURN -> {
+          return;
         }
       }
 
