@@ -3,6 +3,7 @@ package lox;
 import static lox.TokenType.AND;
 import static lox.TokenType.BANG;
 import static lox.TokenType.BANG_EQUAL;
+import static lox.TokenType.COMMA;
 import static lox.TokenType.ELSE;
 import static lox.TokenType.EOF;
 import static lox.TokenType.EQUAL;
@@ -228,7 +229,35 @@ class Parser {
       return new Expr.Unary(operator, right);
     }
 
-    return primary();
+    return call();
+  }
+
+  private Expr call() {
+    Expr expr = primary();
+
+    while (true) {
+      if (match(LEFT_PAREN)) {
+        expr = finishCall(expr);
+      } else {
+        break;
+      }
+    }
+    return expr;
+  }
+
+  private Expr finishCall(Expr callee) {
+    List<Expr> arguments = new ArrayList<>();
+    if (!check(RIGHT_PAREN)) {
+      do {
+        if (arguments.size() >= 255) {
+          error(peek(), "Can't have more than 255 arguments.");
+        }
+        arguments.add(expression());
+      } while (match(COMMA));
+    }
+
+    Token paren = consume(RIGHT_PAREN, "Expect ') after arguments");
+    return new Expr.Call(callee, paren, arguments);
   }
 
   private Expr primary() {
@@ -260,7 +289,7 @@ class Parser {
 
   private Expr parseLeftAssociativeBinaryExpr(Supplier<Expr> operandParser,
       TokenType... operatorTypes) {
-    if(match(operatorTypes)) {
+    if (match(operatorTypes)) {
       Token operator = previous();
       error(operator, "Missing left operand for binary operator");
       operandParser.get();
