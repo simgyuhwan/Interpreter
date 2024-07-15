@@ -1,13 +1,5 @@
 package lox;
 
-import lox.Expr.Assign;
-import lox.Expr.Binary;
-import lox.Expr.Grouping;
-import lox.Expr.Literal;
-import lox.Expr.Logical;
-import lox.Expr.Unary;
-import lox.Expr.Variable;
-
 public class AstPrinter implements Expr.Visitor<String> {
 
 	String print(Expr expr) {
@@ -20,17 +12,17 @@ public class AstPrinter implements Expr.Visitor<String> {
 	}
 
 	@Override
-	public String visitBinaryExpr(Binary expr) {
+	public String visitBinaryExpr(Expr.Binary expr) {
 		return parenthesize(expr.operator.lexeme, expr.left, expr.right);
 	}
 
 	@Override
-	public String visitGroupingExpr(Grouping expr) {
+	public String visitGroupingExpr(Expr.Grouping expr) {
 		return parenthesize("group", expr.expression);
 	}
 
 	@Override
-	public String visitLiteralExpr(Literal expr) {
+	public String visitLiteralExpr(Expr.Literal expr) {
 		if (expr.value == null) {
 			return "nil";
 		}
@@ -38,22 +30,22 @@ public class AstPrinter implements Expr.Visitor<String> {
 	}
 
 	@Override
-	public String visitLogicalExpr(Logical expr) {
+	public String visitLogicalExpr(Expr.Logical expr) {
 		return null;
 	}
 
 	@Override
-	public String visitUnaryExpr(Unary expr) {
+	public String visitUnaryExpr(Expr.Unary expr) {
 		return parenthesize(expr.operator.lexeme, expr.right);
 	}
 
 	@Override
-	public String visitVariableExpr(Variable expr) {
+	public String visitVariableExpr(Expr.Variable expr) {
 		return "";
 	}
 
 	@Override
-	public String visitAssignExpr(Assign expr) {
+	public String visitAssignExpr(Expr.Assign expr) {
 		return "";
 	}
 

@@ -3,14 +3,6 @@ package lox;
 import java.util.ArrayList;
 import java.util.List;
 
-import lox.Expr.Assign;
-import lox.Expr.Binary;
-import lox.Expr.Call;
-import lox.Expr.Grouping;
-import lox.Expr.Literal;
-import lox.Expr.Logical;
-import lox.Expr.Unary;
-import lox.Expr.Variable;
 import lox.Stmt.Block;
 import lox.Stmt.If;
 import lox.Stmt.Var;
@@ -70,6 +62,15 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 		stmt.accept(this);
 	}
 
+	@Override
+	public Void visitReturnStmt(Stmt.Return stmt) {
+		Object value = null;
+		if (stmt.value != null) {
+			value = evaluate(stmt.value);
+		}
+		throw new Return(value);
+	}
+
 	private String stringify(Object object) {
 		if (object == null) {
 			return "nil";
@@ -86,7 +87,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 	}
 
 	@Override
-	public Object visitBinaryExpr(Binary expr) {
+	public Object visitBinaryExpr(Expr.Binary expr) {
 		Object left = evaluate(expr.left);
 		Object right = evaluate(expr.right);
 
@@ -159,12 +160,12 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 	}
 
 	@Override
-	public Object visitGroupingExpr(Grouping expr) {
+	public Object visitGroupingExpr(Expr.Grouping expr) {
 		return evaluate(expr.expression);
 	}
 
 	@Override
-	public Object visitCallExpr(Call expr) {
+	public Object visitCallExpr(Expr.Call expr) {
 		Object callee = evaluate(expr.callee);
 
 		List<Object> arguments = new ArrayList<>();
@@ -184,12 +185,12 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 	}
 
 	@Override
-	public Object visitLiteralExpr(Literal expr) {
+	public Object visitLiteralExpr(Expr.Literal expr) {
 		return expr.value;
 	}
 
 	@Override
-	public Object visitLogicalExpr(Logical expr) {
+	public Object visitLogicalExpr(Expr.Logical expr) {
 		Object left = evaluate(expr.left);
 
 		if (expr.operator.type == TokenType.OR) {
@@ -205,7 +206,7 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 	}
 
 	@Override
-	public Object visitUnaryExpr(Unary expr) {
+	public Object visitUnaryExpr(Expr.Unary expr) {
 		Object right = evaluate(expr.right);
 		switch (expr.operator.type) {
 			case BANG -> {
@@ -221,12 +222,12 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 	}
 
 	@Override
-	public Object visitVariableExpr(Variable expr) {
+	public Object visitVariableExpr(Expr.Variable expr) {
 		return environment.get(expr.name);
 	}
 
 	@Override
-	public Object visitAssignExpr(Assign expr) {
+	public Object visitAssignExpr(Expr.Assign expr) {
 		Object value = evaluate(expr.value);
 		environment.assign(expr.name, value);
 		return value;
@@ -313,5 +314,14 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
 			execute(stmt.body);
 		}
 		return null;
+	}
+}
+
+class Return extends RuntimeException {
+	final Object value;
+
+	public Return(Object value) {
+		super(null, null, false, false);
+		this.value = value;
 	}
 }
