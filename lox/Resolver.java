@@ -8,9 +8,15 @@ import java.util.Stack;
 public class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
 	private final Interpreter interpreter;
 	private final Stack<Map<String, Boolean>> scopes = new Stack<>();
+	private FunctionType currentFucntion = FunctionType.NONE;
 
 	Resolver(Interpreter interpreter) {
 		this.interpreter = interpreter;
+	}
+
+	private enum FunctionType {
+		NONE,
+		FUNCTION
 	}
 
 	@Override
@@ -57,7 +63,10 @@ public class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
 
 	@Override
 	public Void visitReturnStmt(Stmt.Return stmt) {
-		if(stmt.value != null) {
+		if(currentFucntion == FunctionType.NONE) {
+			Lox.error(stmt.keyword, "Can't return from top level code.");
+		}
+		if (stmt.value != null) {
 			resolve(stmt.value);
 		}
 
@@ -69,11 +78,13 @@ public class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
 		declare(stmt.name);
 		define(stmt.name);
 
-		resolveFunction(stmt);
+		resolveFunction(stmt, FunctionType.FUNCTION);
 		return null;
 	}
 
-	private void resolveFunction(Stmt.Function function) {
+	private void resolveFunction(Stmt.Function function, FunctionType type) {
+		FunctionType enclosingFunction = currentFucntion;
+		currentFucntion = type;
 		beginScope();
 		for (Token param : function.params) {
 			declare(param);
@@ -81,13 +92,15 @@ public class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
 		}
 		resolve(function.body);
 		endScope();
+		currentFucntion = enclosingFunction;
 	}
 
 	@Override
 	public Void visitIfStmt(Stmt.If stmt) {
 		resolve(stmt.condition);
 		resolve(stmt.thenBranch);
-		if(stmt.elseBranch != null) resolve(stmt.elseBranch);
+		if (stmt.elseBranch != null)
+			resolve(stmt.elseBranch);
 		return null;
 	}
 
@@ -112,6 +125,10 @@ public class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
 			return;
 
 		Map<String, Boolean> scope = scopes.peek();
+		if (scope.containsKey(name.lexeme)) {
+			Lox.error(name, "Already a variable with this name in this scope.");
+		}
+
 		scope.put(name.lexeme, false);
 	}
 
@@ -139,7 +156,7 @@ public class Resolver implements Expr.Visitor<Void>, Stmt.Visitor<Void> {
 	public Void visitCallExpr(Expr.Call expr) {
 		resolve(expr.callee);
 
-		for(Expr argument : expr.arguments) {
+		for (Expr argument : expr.arguments) {
 			resolve(argument);
 		}
 
