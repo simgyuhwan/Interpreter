@@ -26,6 +26,7 @@ public class GenerateAst {
 
 		defineAst(outputDir, "Stmt", List.of(
 			"Block     : List<Stmt> statements",
+			"Class     : Token name, List<Stmt.Function> methods",
 			"Expression: Expr expression",
 			"Print     : Expr expression",
 			"Return    : Token keyword, Expr value",
