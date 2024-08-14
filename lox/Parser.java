@@ -40,7 +40,8 @@ class Parser {
 
 	private Stmt declaration() {
 		try {
-			if(match(CLASS)) return classDeclaration();
+			if (match(CLASS))
+				return classDeclaration();
 			if (match(FUN)) {
 				return function("function");
 			}
@@ -60,7 +61,7 @@ class Parser {
 		consume(LEFT_BRACE, "Expect '{' before class body");
 
 		List<Stmt.Function> methods = new ArrayList<>();
-		while(!check(RIGHT_BRACE) && !isAtEnd()) {
+		while (!check(RIGHT_BRACE) && !isAtEnd()) {
 			methods.add(function("method"));
 		}
 
@@ -255,6 +256,9 @@ class Parser {
 		while (true) {
 			if (match(LEFT_PAREN)) {
 				expr = finishCall(expr);
+			} else if (match(DOT)) {
+				Token name = consume(IDENTIFIER, "Expect property name after '.'.");
+				expr = new Expr.Get(expr, name);
 			} else {
 				break;
 			}
