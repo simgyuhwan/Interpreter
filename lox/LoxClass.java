@@ -3,7 +3,7 @@ package lox;
 import java.util.List;
 import java.util.Map;
 
-public class LoxClass implements LoxCallable{
+public class LoxClass implements LoxCallable {
 	final String name;
 	private final Map<String, LoxFunction> methods;
 
@@ -19,16 +19,27 @@ public class LoxClass implements LoxCallable{
 
 	@Override
 	public Object call(Interpreter interpreter, List<Object> arguments) {
-		return new LoxInstance(this);
+		LoxInstance instance = new LoxInstance(this);
+		LoxFunction initializer = findMethod("init");
+		if (initializer != null) {
+			initializer.bind(instance).call(interpreter, arguments);
+		}
+
+		return instance;
 	}
 
 	@Override
 	public int arity() {
+		LoxFunction initializer = findMethod("init");
+		if (initializer != null) {
+			return initializer.arity();
+		}
+
 		return 0;
 	}
 
 	LoxFunction findMethod(String name) {
-		if(methods.containsKey(name)) {
+		if (methods.containsKey(name)) {
 			return methods.get(name);
 		}
 
