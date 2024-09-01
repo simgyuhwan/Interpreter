@@ -1,0 +1,13 @@
+
+n
+java:S1301ó"KReplace this "switch" statement by "if" statements to increase readability.(«Ä×åùÿÿÿÿ8È÷¡ºš2
+K
+java:S1905")Remove this unnecessary cast to "double".(å£¦ýþÿÿÿÿ8Ü÷¡ºš2
+L	java:S1060"+Replace this use of System.out by a logger.(£ó™¾ÿÿÿÿÿ8Ü÷¡ºš2
+{	java:S131ó"YComplete cases by adding the missing enum constants or add a default case to this switch.(«Ä×åùÿÿÿÿ8â÷¡ºš2
+^	java:S125‚"<This block of commented-out lines of code should be removed.(•©…Ÿüÿÿÿÿ8â÷¡ºš2
+s
+java:S6201ž"PReplace this instanceof check and cast with 'instanceof LoxInstance loxinstance'(áØÑùÿÿÿÿ8ã÷¡ºš2
+M	java:S106û"+Replace this use of System.out by a logger.(£ó™¾ÿÿÿÿÿ8å÷¡ºš2
+J
+java:S1948£"'Make "value" transient or serializable.(‚ëÌ§ýÿÿÿÿ8ç÷¡ºš2

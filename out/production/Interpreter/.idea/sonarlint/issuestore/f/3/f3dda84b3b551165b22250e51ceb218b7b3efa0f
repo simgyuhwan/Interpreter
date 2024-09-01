@@ -1,7 +1,5 @@
 
 l	java:S117Y"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(âàÛ68Î×··š2
-f
-java:S2583G"DChange this condition so that it does not always evaluate to "false"(ÆŠË²ûÿÿÿÿ8—þ°Þš2
 G	java:S106"+Replace this use of System.out by a logger.(€Ì¶µ8××··š2
 G	java:S1060"+Replace this use of System.out by a logger.(ÈË“¥8Ú×··š2
 X	java:S125M"<This block of commented-out lines of code should be removed.(Ï¿íÛ8Û×··š2

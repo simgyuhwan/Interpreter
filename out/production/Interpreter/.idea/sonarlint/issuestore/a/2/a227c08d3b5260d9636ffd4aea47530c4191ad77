@@ -1,0 +1,11 @@
+
+n
+java:S1301ä"KReplace this "switch" statement by "if" statements to increase readability.(«Ä×åùÿÿÿÿ8µŠ ·š2
+K
+java:S1905")Remove this unnecessary cast to "double".(å£¦ýþÿÿÿÿ8ÒŠ ·š2
+L	java:S106/"+Replace this use of System.out by a logger.(£ó™¾ÿÿÿÿÿ8ÔŠ ·š2
+{	java:S131ä"YComplete cases by adding the missing enum constants or add a default case to this switch.(«Ä×åùÿÿÿÿ8ÝŠ ·š2
+^	java:S125ó"<This block of commented-out lines of code should be removed.(•©…Ÿüÿÿÿÿ8ÞŠ ·š2
+M	java:S106ã"+Replace this use of System.out by a logger.(£ó™¾ÿÿÿÿÿ8ãŠ ·š2
+J
+java:S1948‹"'Make "value" transient or serializable.(‚ëÌ§ýÿÿÿÿ8åŠ ·š2

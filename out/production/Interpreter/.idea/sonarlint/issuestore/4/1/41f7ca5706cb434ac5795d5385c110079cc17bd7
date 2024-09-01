@@ -1,0 +1,20 @@
+
+s	java:S117‡"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ž·µèüÿÿÿÿ8×£Ÿ·š2
+n
+java:S1301”"KReplace this "switch" statement by "if" statements to increase readability.(ÃÁø›ýÿÿÿÿ8×£Ÿ·š2
+]	java:S125"<This block of commented-out lines of code should be removed.(„×õËùÿÿÿÿ8ÿ£Ÿ·š2
+]	java:S125"<This block of commented-out lines of code should be removed.(éØ»Úûÿÿÿÿ8ÿ£Ÿ·š2
+X	java:S125#"<This block of commented-out lines of code should be removed.(ÒËÒ¬8€¤Ÿ·š2
+\
+java:S1854"?Remove this useless assignment to local variable "initializer".(§ÌšŸ8…¤Ÿ·š2
+b
+java:S1854"?Remove this useless assignment to local variable "initializer".(ìÙŽ˜úÿÿÿÿ8…¤Ÿ·š2
+b
+java:S1854ƒ"?Remove this useless assignment to local variable "initializer".(¯œÌòÿÿÿÿÿ8…¤Ÿ·š2
+M
+java:S1481}"0Remove this unused "initializer" local variable.(ÆÐñÝ8†¤Ÿ·š2
+m
+java:S6201Ý"JReplace this instanceof check and cast with 'instanceof Variable variable'(ëÓØ¢üÿÿÿÿ8‘¤Ÿ·š2
+c
+java:S6201à"@Replace this instanceof check and cast with 'instanceof Get get'(Ò‘Í„ýÿÿÿÿ8‘¤Ÿ·š2
+{	java:S131”"YComplete cases by adding the missing enum constants or add a default case to this switch.(ÃÁø›ýÿÿÿÿ8“¤Ÿ·š2
