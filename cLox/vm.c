@@ -24,11 +24,11 @@ Value pop() {
   return *vm.stackTop;
 }
 
-InterpretResult interpret(Chunk* chunk) {
-  vm.chunk = chunk;
-  vm.ip = vm.chunk->code;
-  return run();
-}
+// InterpretResult interpret(Chunk* chunk) {
+//   vm.chunk = chunk;
+//   vm.ip = vm.chunk->code;
+//   return run();
+// }
 
 static InterpretResult run() {
   #define READ_BYTE() (*vm.ip++)

@@ -1,14 +1,6 @@
 #ifndef clox_scanner_h
 #define clox_scanner_h
 
-
-typedef struct {
-  TokenType type;
-  const char* start;
-  int length;
-  int line;
-} Token;
-
 typedef enum {
   // 단일 문자 토큰
   TOKEN_LEFT_PAREN, TOKEN_RIGHT_PAREN, 
@@ -34,17 +26,26 @@ typedef enum {
   TOKEN_ERROR, TOKEN_EOF
 } TokenType;
 
+typedef struct {
+  TokenType type;
+  const char* start;
+  int length;
+  int line;
+} Token;
+
 void initScanner(const char* source);
 Token scanToken();
-static bool isAtEnd();
-static Token makeToken(TokenType type);
-static Token errorToken(const char* message)
-static char advance();
-static bool match(char expected);
-static void skipWhitespace();
-static char peek();
-static char peekNext();
-static Token string();
-static bool isDigit(char c);
+// static bool isAtEnd();
+// static Token makeToken(TokenType type);
+// static Token errorToken(const char* message)
+// static char advance();
+// static bool match(char expected);
+// static void skipWhitespace();
+// static char peek();
+// static char peekNext();
+// static Token string();
+// static bool isDigit(char c);
+// static bool isAlpha(char c);
+// static TokenType identifierType();
 
 #endif

@@ -7,6 +7,8 @@
 #include <String.h>
 #include "vm.h"
 
+static char* readFile(const char* path);
+
 static void repl() {
   char line[1024];
   for (;;) {
@@ -52,7 +54,7 @@ static char* readFile(const char* path) {
     fprintf(stderr, "Could not read file \"%s\".\n", path);
     exit(74);
   }
-  
+
   buffer[bytesRead] = '\0'; // 버퍼 마지막에 널을 추가해 문자열의 끝을 추가
 
   fclose(file); // 리소스 해제
