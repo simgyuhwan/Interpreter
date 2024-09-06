@@ -2,6 +2,7 @@
 #include "common.h"
 #include "vm.h"
 #include "debug.h"
+#include "compiler.h"
 
 VM vm;
 
@@ -79,4 +80,9 @@ static InterpretResult run() {
 
 static void resetStack() {
   vm.stackTop = vm.stack;
+}
+
+InterpretResult interpret(const char* source) {
+  compile(source);
+  return INTERPRET_OK;
 }
